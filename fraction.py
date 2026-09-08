@@ -87,6 +87,17 @@ class Fraction:
 
         return a
 
+    def normalize(self):
+        """
+        Normalizes numerator and denominator so negation sign is on numerator
+        :return: tuple[int, int] normalized numerator and denominator
+        """
+        if self.__denominator < 0:
+            numerator, denominator = -self.__numerator, - self.__denominator
+        else:
+            numerator, denominator = self.__numerator, self.__denominator
+
+        return numerator, denominator
 
     def __neg__(self):
         """
@@ -133,3 +144,24 @@ class Fraction:
         denominator = self.__denominator / other.get_denominator()
 
     def __eq__(self, other):
+        """
+        Checks if left and right side fraction objects are equal
+        :param other: right side fraction object
+        :return:
+        """
+        if not isinstance(other, Fraction):
+            raise TypeError(f"Right-side operand must be of type Fraction")
+
+        # normalize self and other
+        numer1, denom1 = self.normalize()
+        numer2, denom2 = other.normalize()
+
+
+        return numer1 * denom2 == numer2 * denom1
+
+    def __ne__(self, other):
+        return not __eq__
+
+    def __lt__(self, other):
+        pass
+        
