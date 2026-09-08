@@ -114,7 +114,7 @@ class Fraction:
         """
         if not isinstance(other, Fraction):
             raise TypeError("Right-side operand must be of type Fraction")
-        numerator = elf.__numserator * other.get_denominator() + other.get_numerator() * self.__denominator
+        numerator = self.__numerator * other.get_denominator() + other.get_numerator() * self.__denominator
         denominator = self.__denominator * other.get_denominator()
 
         return Fraction(numerator,denominator)
@@ -142,6 +142,8 @@ class Fraction:
             raise ZeroDivisionError
         numerator = self.__numerator / other.get_numerator()
         denominator = self.__denominator / other.get_denominator()
+
+        return Fraction(numerator,denominator)
 
     def __eq__(self, other):
         """
