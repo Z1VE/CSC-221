@@ -3,8 +3,8 @@
 # DATE : 9/8/26
 # TERM : FALL 2026
 # COURSE : CSC 221
-# PROJECT : Fraction Class Lab
-# FILENAME : fraction.py
+# PROJECT : Fraction Class Lab (Driver Test File)
+# FILENAME : fraction_driver.py
 #------------------------------
 from fraction import Fraction
 
