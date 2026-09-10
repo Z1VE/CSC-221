@@ -34,11 +34,15 @@ def main():
 # Testing all Fraction object methods
 
     INIT_CASES = {
-        (2,4):'1/2',
-        (1,4):'1/4'
-
-
-
+        (1,2):'1/2',
+        (2,8):'1/4',
+        (0,2):'0',
+        (8,2):'4',
+        (-1,2):'-1/2',
+        (2,-8):'-1/4',
+        (0,-2):'0',
+        (-8,2):'-4',
+        (-8,-2):'4',
     }
     ARITHMETIC_CASES = {
         'negate':[],
@@ -55,13 +59,17 @@ def main():
         'greater than':[],
         'greater than or equal':[]
     }
-
+# Shows the initialization working and reduction of fractions as well as symbol handling
     for fraction in INIT_CASES:
         numerator,denominator = fraction
         frac = Fraction(numerator,denominator)
 
-        print(f"The fraction {fraction} should display: {INIT_CASES[fraction]} and it displays:     {frac}")
+        print(f"The fraction {fraction} should display: {INIT_CASES[fraction]} and it displays: {frac}")
 
+        frac1 = Fraction(3,2)
+        frac2 = Fraction(2,2)
+        frac3 = Fraction(2,2)
+    print(frac1 >= frac1)
 
 
 
