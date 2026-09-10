@@ -213,7 +213,7 @@ class Fraction:
         if not isinstance(other, Fraction):
             raise TypeError(f"Right-side operand must be of type Fraction")
 
-        return not self.__le__
+        return not self.__le__(other)
 
     def __ge__(self, other):
         """
@@ -223,4 +223,4 @@ class Fraction:
         """
         if not isinstance(other, Fraction):
             raise TypeError(f"Right-side operand must be of type Fraction")
-        return not self.__lt__
+        return not self.__lt__(other)
