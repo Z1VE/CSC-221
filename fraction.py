@@ -9,7 +9,7 @@
 
 class Fraction:
     def __init__(self,numerator, denominator):
-        if not isinstance(numerator,int) and isinstance(denominator,int):
+        if not isinstance(numerator,int) or not isinstance(denominator,int):
             raise TypeError("Your numerator and or denominator are not integers")
         if denominator == 0:
             raise ZeroDivisionError
@@ -19,12 +19,6 @@ class Fraction:
         self.__reduce()
 
     def __str__(self):
-        if self.__denominator == 1:
-            return str(self.__numerator)
-        if self.__denominator < 0:
-            if self.__denominator == -1:
-                return f"{-self.__numerator}"
-            return f"{-self.__numerator}/{self.__denominator}"
         return f'{self.__numerator}/{self.__denominator}'
 
     def get_numerator(self):
@@ -52,6 +46,7 @@ class Fraction:
         if value == 0:
             raise ZeroDivisionError
         self.__denominator = value
+        self.__reduce()
 
     def set_numerator(self,value):
         """
@@ -60,9 +55,10 @@ class Fraction:
         :return: None
         """
         if not isinstance(value, int):
-            raise TypeError("Your denominator is not an integer")
+            raise TypeError("Your numerator is not an integer")
 
         self.__numerator = value
+        self.__reduce()
 
 
     def __reduce(self):
@@ -75,8 +71,15 @@ class Fraction:
         self.__numerator //= gcd
         self.__denominator //= gcd
 
-    def __calc_gcd(self):
+        if self.__denominator < 0:
+            self.__numerator = -self.__numerator
+            self.__denominator = -self.__denominator
 
+    def __calc_gcd(self):
+        """
+        calculates greatest common divisor
+        :return: greatest common divisor
+        """
         a = max(abs(self.__numerator), abs(self.__denominator))
         b = min(abs(self.__numerator), abs(self.__denominator))
 
@@ -86,18 +89,6 @@ class Fraction:
             a = temp
 
         return a
-
-    def normalize(self):
-        """
-        Normalizes numerator and denominator so negation sign is on numerator
-        :return: tuple[int, int] normalized numerator and denominator
-        """
-        if self.__denominator < 0:
-            numerator, denominator = -self.__numerator, - self.__denominator
-        else:
-            numerator, denominator = self.__numerator, self.__denominator
-
-        return numerator, denominator
 
     def __neg__(self):
         """
@@ -120,7 +111,14 @@ class Fraction:
         return Fraction(numerator,denominator)
 
     def __sub__(self, other):
-        pass
+        """
+        subtracts one fraction object from another
+        :param other: second fraction on the right side of operator
+        :return: Fraction object result of difference of both fraction
+        """
+        if not isinstance(other, Fraction):
+            raise TypeError("Right-side operand must be of type Fraction")
+        return self + (-other)
 
     def __mul__(self, other):
         """
@@ -136,12 +134,18 @@ class Fraction:
         return Fraction(numerator, denominator)
 
     def __truediv__(self, other):
+        """
+        Divides 2 fractions by one another
+        :param other: right side operand
+        :return: quotient
+        """
         if not isinstance(other, Fraction):
             raise TypeError(f"Right-side operand must be of type Fraction")
         if other.get_denominator() == 0:
             raise ZeroDivisionError
-        numerator = self.__numerator / other.get_numerator()
-        denominator = self.__denominator / other.get_denominator()
+
+        numerator = self.__numerator * other.get_denominator()
+        denominator = self.__denominator * other.get_numerator()
 
         return Fraction(numerator,denominator)
 
@@ -149,21 +153,74 @@ class Fraction:
         """
         Checks if left and right side fraction objects are equal
         :param other: right side fraction object
-        :return:
+        :return: boolean
         """
         if not isinstance(other, Fraction):
             raise TypeError(f"Right-side operand must be of type Fraction")
 
-        # normalize self and other
-        numer1, denom1 = self.normalize()
-        numer2, denom2 = other.normalize()
-
-
-        return numer1 * denom2 == numer2 * denom1
+        return self.get_numerator() * other.get_denominator() == other.get_numerator() * self.get_denominator()
 
     def __ne__(self, other):
-        return not __eq__
+        """
+        Checks if left and right side fraction objects are not equal
+        :param other: right side fraction object
+        :return: boolean
+        """
+        if not isinstance(other, Fraction):
+            raise TypeError(f"Right-side operand must be of type Fraction")
+
+        return not self.__eq__(other)
 
     def __lt__(self, other):
-        pass
-        
+        """
+        Checks if left side fraction object is less than right-side
+        :param other: right side fraction object
+        :return: boolean
+        """
+        if not isinstance(other, Fraction):
+            raise TypeError(f"Right-side operand must be of type Fraction")
+
+        a = self.get_numerator() * other.get_denominator()
+        b = other.get_numerator() * self.get_denominator()
+
+        if a < b:
+            return True
+        else:
+            return False
+
+    def __le__(self,other):
+        """
+        Checks if left side fraction object is less than or equal to the right side fraction object
+        :param other: right side fraction object
+        :return: boolean
+        """
+        if not isinstance(other, Fraction):
+            raise TypeError(f"Right-side operand must be of type Fraction")
+
+        if self.__lt__(other) or self.__eq__(other):
+            return True
+
+        else:
+            return False
+
+
+    def __gt__(self, other):
+        """
+        Checks if left side fraction object is greater than the right side fraction object
+        :param other: right side fraction object
+        :return: boolean
+        """
+        if not isinstance(other, Fraction):
+            raise TypeError(f"Right-side operand must be of type Fraction")
+
+        return not self.__le__
+
+    def __ge__(self, other):
+        """
+        Checks if left side fraction object is greater than or equal to the right side fraction object
+        :param other: right side fraction object
+        :return:
+        """
+        if not isinstance(other, Fraction):
+            raise TypeError(f"Right-side operand must be of type Fraction")
+        return not self.__lt__
