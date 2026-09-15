@@ -46,7 +46,6 @@ class Fraction:
         if value == 0:
             raise ZeroDivisionError
         self.__denominator = value
-        self.__reduce()
 
     def set_numerator(self,value):
         """
@@ -58,7 +57,6 @@ class Fraction:
             raise TypeError("Your numerator is not an integer")
 
         self.__numerator = value
-        self.__reduce()
 
 
     def __reduce(self):

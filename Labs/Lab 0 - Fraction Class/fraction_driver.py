@@ -69,16 +69,55 @@ def main():
         'greater than':[[(1,2),(1,2),False],[(1,2),(2,4),False],[(2,8),(0,2),True],[(-8,2),(-4,-1),False],[(-8,-2),(-8,2),True],[(2,8),(6,4),False],[(-2,1),(-1,3),False]],
         'greater than or equal':[[(1,2),(1,2),True],[(1,2),(2,4),True],[(2,8),(0,2),True],[(-8,2),(-4,-1),False],[(-8,-2),(-8,2),True],[(2,8),(6,4),False],[(-2,1),(-1,3),False]]
     }
+
+
 # Shows the initialization working and reduction of fractions as well as symbol handling
+    print(f"\n {"INITIALIZATION".center(30, '-')}")
     for fraction in INIT_CASES:
         numerator,denominator = fraction
         frac = Fraction(numerator,denominator)
 
-        print(f"The fraction {fraction} should display: {INIT_CASES[fraction]} and it displays: {frac}")
+        print(f"The fraction {fraction} should display: {INIT_CASES[fraction]} and it displays: {frac} ")
+
+
+    print(f"\n {"PUBLIC METHODS".center(30,'-')}")
+
+    for fraction in INIT_CASES:
+        numerator,denominator = fraction
+        frac = Fraction(numerator,denominator)
+        result = frac.get_denominator()
+        print(f"The fraction {fraction} with the get_denominator() method displays: {result}")
+
+    print("\n")
+
+    for fraction in INIT_CASES:
+        numerator,denominator = fraction
+        frac = Fraction(numerator,denominator)
+        result = frac.get_numerator()
+        print(f"The fraction {fraction} with the get_numerator() method displays: {result}")
+
+    print('\n')
+
+    for fraction in INIT_CASES:
+        numerator, denominator = fraction
+        frac = Fraction(numerator, denominator)
+        result = frac.get_denominator()
+        for num in range(1,6):
+            frac.set_denominator(num)
+            print(f"The fraction {fraction} with the set_denominator({num}) method displays: {frac}")
+        print('\n')
+
+    for fraction in INIT_CASES:
+        numerator, denominator = fraction
+        frac = Fraction(numerator, denominator)
+        result = frac.get_numerator()
+        for num in range(0,5):
+            frac.set_numerator(num)
+            print(f"The fraction {fraction} with the set_numerator({num}) method displays: {frac}")
+        print('\n')
+
 
     print('\n-------------ARITHMETIC CASES-------------')
-
-
 # Shows the results of Arithmetic Operators
     for operator in ARITHMETIC_CASES:
         print(f"\n-------------{operator.upper()}-------------")
@@ -146,6 +185,10 @@ def main():
             )
 
             print(f"The fraction {frac1} {op_symbol} {frac2} should display as {expected} and displays as: {actual} {"\033[32m\033[1mPASS" if expected == actual else "\033[31m\033[1mFAIL"}\033[0m")
+
+
+
+
 
     # Because we call __reduce() in our init we can't see what the original fraction looked like
 
