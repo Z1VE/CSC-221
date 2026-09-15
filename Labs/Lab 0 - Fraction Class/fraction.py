@@ -19,6 +19,13 @@ class Fraction:
         self.__reduce()
 
     def __str__(self):
+        """
+        Returns a cleanly formatted string representation of the fraction.
+        Displays whole numbers without a denominator bar.
+       :return: str
+        """
+        if self.__denominator == 1:
+            return f'{self.__numerator}'
         return f'{self.__numerator}/{self.__denominator}'
 
     def get_numerator(self):
@@ -139,7 +146,7 @@ class Fraction:
         """
         if not isinstance(other, Fraction):
             raise TypeError(f"Right-side operand must be of type Fraction")
-        if other.get_denominator() == 0:
+        if other.get_numerator() == 0:
             raise ZeroDivisionError
 
         numerator = self.__numerator * other.get_denominator()
