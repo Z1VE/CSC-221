@@ -15,9 +15,17 @@ class FootMeasure:
         self.__convert()
 
     def __str__(self):
+        """
+        returns the string value of our FootMeasure object
+        :return:
+        """
         pass
 
     def __convert(self):
+        """
+        converts all feet to inches to get 1 consistent unit
+        :return:
+        """
         self.__inches += 12*self.__feet
 
     def get_feet(self):
@@ -34,3 +42,17 @@ class FootMeasure:
         """
         return self.__inches
 
+    def set_feet(self):
+        """
+        sets and sets the feet value of our FootMeasure object
+        :return:
+        """
+        pass
+
+
+    def set_inches(self):
+        """
+        sets and sets the inches value of our FootMeasure object
+        :return:
+        """
+        pass
