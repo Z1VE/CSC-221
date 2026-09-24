@@ -60,7 +60,7 @@ RELATION_CASES = {
     (8,4):(8,0),
     (6,0):(0,72),
     (6,2):(0,74),
-    (6,0):(3,36),
+    (7,0):(4,36),
     (0,0):(0,0),
     (0,9):(1,9),
     (1,10):(1,11),
@@ -76,25 +76,29 @@ RELATION_RESULTS = {
 }
 
 OPERATOR_MAP = {
-    "Equal": lambda x,y: x==y,
-    "Not Equal": lambda x,y: x!=y,
-    "Greater than": lambda x,y: x>y,
-    "Greater than or equal to": lambda x,y: x>=y,
-    "Less than": lambda x,y: x<y,
-    "Less than or equal to": lambda x,y: x<=y,
+    "Equal": (lambda x, y: x == y, "=="),
+    "Not Equal": (lambda x, y: x != y, "!="),
+    "Greater than": (lambda x, y: x > y, ">"),
+    "Greater than or equal to": (lambda x, y: x >= y, ">="),
+    "Less than": (lambda x, y: x < y, "<"),
+    "Less than or equal to": (lambda x, y: x <= y, "<="),
 }
 
 for operand in RELATION_RESULTS:
-    symbol = OPERATOR_MAP[operand]   # NOT DONE HERE
-    print(symbol)
+    func, symbol = OPERATOR_MAP[operand]
+    print('\n'+f"CURRENT OPERATOR: {symbol} ".center(50, '-')+'\n')
+
     count = 0
     for num1 in RELATION_CASES:
-        measureA = FootMeasure(num1[0],num1[1])
-        measureB = FootMeasure(RELATION_CASES[num1][0],RELATION_CASES[num1][1])
+        measureA = FootMeasure(num1[0], num1[1])
+        measureB = FootMeasure(RELATION_CASES[num1][0], RELATION_CASES[num1][1])
+
         expected = RELATION_RESULTS[operand][count]
-        result = 0
+        result = func(measureA, measureB)
+
         count += 1
-        print(f"{measureA} INSERT OPERATOR HERE {measureB},{result}")
+        pass_fail = "\033[32m\033[1mPASS\033[0m" if expected == result else "\033[31m\033[1mFAIL\033[0m"
+        print(f"Operation: {measureA} {symbol} {measureB} Expected: {expected} got: {result} {pass_fail}")
 
 for measurement in INIT_CASES:
     result = FootMeasure(measurement[0],measurement[1])
@@ -110,5 +114,3 @@ for measurement in ADDITION_CASES:
     pass_fail = "\033[32m\033[1mPASS\033[0m" if expected == str(result) else "\033[31m\033[\033[0m"
 
     print(f"Operation: {str(a):<3} + {str(b):<3} | Expected: {expected:<5} | Got: {str(result):<5} | {pass_fail}")
-
-
